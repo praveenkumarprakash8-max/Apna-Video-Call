@@ -22,14 +22,22 @@ export const AuthProvider = ({ children }) => {
 
   const handleRegister = async (name, username, password) => {
     try {
-      let request = await client.post("/register", {
-        name: name,
-        username: username,
-        password: password,
-      });
+      let request = await client.post(
+        "/register",
+        {
+          name: name,
+          username: username,
+          password: password,
+        },
+        {
+          validateStatus: (status) => status >= 200 && status < 500,
+        },
+      );
 
       if (request.status >= 200 && request.status < 400) {
-        return request.data.message || "Registration Successful!";
+        return request.data.message;
+      } else {
+        throw new Error(request.data.message || "Registration failed");
       }
     } catch (err) {
       throw err;

@@ -41,6 +41,7 @@ export default function Authentication() {
         let result = await handleRegister(name, username, password);
         console.log(result);
         setUsername("");
+        setName("");
         setMessage(result);
         setOpen(true);
         setError("");
@@ -97,6 +98,7 @@ export default function Authentication() {
                 variant={formState === 0 ? "contained" : ""}
                 onClick={() => {
                   setFormState(0);
+                  setError("");
                 }}
               >
                 Sign In
@@ -105,6 +107,7 @@ export default function Authentication() {
                 variant={formState === 1 ? "contained" : ""}
                 onClick={() => {
                   setFormState(1);
+                  setError("");
                 }}
               >
                 Sign Up
@@ -136,7 +139,7 @@ export default function Authentication() {
                 label="Username"
                 name="username"
                 value={username}
-                autoFocus
+                autoFocus={formState === 0}
                 onChange={(e) => setUsername(e.target.value)}
               />
               <TextField
