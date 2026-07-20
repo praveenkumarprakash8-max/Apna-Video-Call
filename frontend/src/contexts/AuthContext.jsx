@@ -8,6 +8,9 @@ export const AuthContext = createContext({});
 
 const client = axios.create({
   baseURL: `${server}/api/v1/users`,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 export const AuthProvider = ({ children }) => {
@@ -25,12 +28,8 @@ export const AuthProvider = ({ children }) => {
         password: password,
       });
 
-      // Fix: Handle both 201 CREATED and 200 OK statuses
-      if (
-        request.status === httpStatus.CREATED ||
-        request.status === httpStatus.OK
-      ) {
-        return request.data.message;
+      if (request.status >= 200 && request.status < 400) {
+        return request.data.message || "Registration Successful!";
       }
     } catch (err) {
       throw err;
