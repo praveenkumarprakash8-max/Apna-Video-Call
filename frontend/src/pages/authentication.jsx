@@ -20,11 +20,11 @@ import { Snackbar } from "@mui/material";
 const defaultTheme = createTheme();
 
 export default function Authentication() {
-  const [username, setUsername] = React.useState();
-  const [password, setPassword] = React.useState();
-  const [name, setName] = React.useState();
-  const [error, setError] = React.useState();
-  const [message, setMessage] = React.useState();
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [name, setName] = React.useState("");
+  const [error, setError] = React.useState("");
+  const [message, setMessage] = React.useState("");
 
   const [formState, setFormState] = React.useState(0);
 
@@ -49,7 +49,10 @@ export default function Authentication() {
       }
     } catch (err) {
       console.log(err);
-      let message = err.response.data.message;
+      let message =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Invalid Username or Password";
       setError(message);
     }
   };
@@ -114,9 +117,9 @@ export default function Authentication() {
                   margin="normal"
                   required
                   fullWidth
-                  id="username"
+                  id="fullName"
                   label="Full Name"
-                  name="username"
+                  name="fullName"
                   value={name}
                   autoFocus
                   onChange={(e) => setName(e.target.value)}
