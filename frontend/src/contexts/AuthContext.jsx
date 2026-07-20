@@ -25,7 +25,11 @@ export const AuthProvider = ({ children }) => {
         password: password,
       });
 
-      if (request.status === httpStatus.CREATED) {
+      // Fix: Handle both 201 CREATED and 200 OK statuses
+      if (
+        request.status === httpStatus.CREATED ||
+        request.status === httpStatus.OK
+      ) {
         return request.data.message;
       }
     } catch (err) {
