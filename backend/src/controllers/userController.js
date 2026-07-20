@@ -44,7 +44,7 @@ const register = async (req, res) => {
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res
-        .status(httpStatus.FOUND)
+        .status(httpStatus.CONFLICT) // Fix: httpStatus.FOUND (302) ki jagah CONFLICT (409) kar diya hai
         .json({ message: "User already exists" });
     }
 
